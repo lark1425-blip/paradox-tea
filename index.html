@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PARADOX — Чай, ломающий реальность</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f0a1a; /* Глубокий темный */
+            --text-color: #e0e0e0;
+            --accent-purple: #8a2be2; /* Электрик */
+            --accent-pink: #ff00ff; /* Фуксия */
+            --accent-lime: #ccff00; /* Кислотный лайм */
+            --card-bg: #1a1225;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Контейнер для ограничения ширины */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        /* Секции */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Space Mono', monospace; /* Шрифт с характером */
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 5rem;
+            line-height: 1;
+            color: #fff;
+            text-shadow: 4px 4px 0 var(--accent-purple), -2px -2px 0 var(--accent-lime);
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        /* Эффект глитча для заголовка (как на упаковке) */
+        h1::after {
+            content: 'PARADOX';
+            position: absolute;
+            left: 2px;
+            top: 0;
+            color: var(--accent-pink);
+            opacity: 0.7;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            z-index: -1;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: var(--accent-lime);
+            margin-bottom: 40px;
+            border-left: 5px solid var(--accent-purple);
+            padding-left: 20px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #b0b0b0;
+        }
+
+        .highlight {
+            color: var(--accent-pink);
+            font-weight: 700;
+        }
+
+        /* Титульник */
+        .hero {
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            font-family: 'Space Mono', monospace;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        .student-info {
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Сетки для карточек (как у подруги, но темные) */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            transition: transform 0.3s ease, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-lime);
+        }
+
+        /* Стили для плюсов и минусов */
+        .pros-cons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+        .pros { color: #4ade80; }
+        .cons { color: #f87171; }
+
+        /* Картинки */
+        .image-placeholder {
+            width: 100%;
+            border-radius: 15px;
+            border: 2px solid var(--accent-purple);
+            margin-top: 20px;
+            box-shadow: 0 0 30px rgba(138, 43, 226, 0.2);
+        }
+
+        /* Мудборд сетка */
+        .moodboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .moodboard-grid img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            filter: grayscale(30%) contrast(120%);
+            transition: filter 0.3s;
+        }
+        .moodboard-grid img:hover {
+            filter: grayscale(0%) contrast(100%);
+        }
+
+        /* Палитра цветов */
+        .palette {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .color-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+
+        /* Кнопка вверх */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-purple);
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 100;
+        }
+
+        .scroll-top.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            .grid-2, .grid-3, .moodboard-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="#" class="scroll-top" id="scrollTopBtn">↑</a>
+
+    <!-- 1. ТИТУЛЬНИК -->
+    <section class="hero" id="top">
+        <div class="container">
+            <h1>PARADOX</h1>
+            <p>ЧАЙ, КОТОРЫЙ ЛОМАЕТ РЕАЛЬНОСТЬ</p>
+            <div class="student-info">
+                Проект по графическому дизайну<br>
+                Выполнил: <strong>Трофимов Дмитрий</strong>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. АССОЦИАЦИИ -->
+    <section>
+        <div class="container">
+            <h2>01. С чем ассоциируется чай?</h2>
+            <div class="grid-2">
+                <div>
+                    <p><span class="highlight">Классический слой:</span> уют, тепло, вечер, плед, замедление, ритуал, дом.</p>
+                    <p><span class="highlight">Наш слой:</span> чай как <strong>переключатель состояния</strong>. Не просто расслабление, а <strong>смена реальности</strong>.</p>
+                    <p>Парадокс в том, что самый бытовой напиток может стать порталом в странное. Мы берем привычный ритуал и превращаем его в маленькое приключение сознания.</p>
+                </div>
+                <div class="card">
+                    <h3>Лист эмоций «Парадокса»</h3>
+                    <ul style="list-style-type: none; padding-left: 0;">
+                        <li style="margin-bottom: 10px;">🌀 <strong>Тихая странность</strong> — момент между сном и явью.</li>
+                        <li style="margin-bottom: 10px;">🔥 <strong>Дежавю</strong> — вкус, который ты "уже где-то пробовал", но не можешь вспомнить</li>
+                        <li style="margin-bottom: 10px;">👁️ <strong>Тихий хаос</strong> — снаружи спокойно, внутри взрыв цвета и смысла</li>
+                        <li>✨ <strong>Эскапизм</strong> — чай как портал: сделал глоток и реальность стала мягче/страннее.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. ТИПЫ УПАКОВОК -->
+    <section>
+        <div class="container">
+            <h2>02. Типы упаковок</h2>
+            <p>Анализ материалов для выбора идеального носителя нашей идеи.</p>
+            <div class="grid-2" style="margin-top: 30px;">
+                <div class="card">
+                    <h3>Жесть (Металл)</h3>
+                    <p style="font-size: 0.9rem;">Классика премиум-сегмента.</p>
+                    <div class="pros-cons">
+                        <span class="pros">+ Премиальность, защита, многоразовость</span>
+                        <span class="cons">− Дорого, тяжело, плохо для экологии</span>
+                    </div>
+                </div>
+                <div class="card" style="border: 2px solid var(--accent-lime);">
+                    <h3>Картон <span style="color:var(--accent-lime); font-size:0.8rem;">(НАШ ВЫБОР)</span></h3>
+                    <p style="font-size: 0.9rem;">Идеален для сложной графики.</p>
+                    <div class="pros-cons">
+                        <span class="pros">+ Дёшево, эко, свобода печати, легкость</span>
+                        <span class="cons">− Меньше защита (нужен фольгированный вкладыш)</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Стекло</h3>
+                    <p style="font-size: 0.9rem;">Прозрачность и эстетика.</p>
+                    <div class="pros-cons">
+                        <span class="pros">+ Видно продукт, премиум-вид</span>
+                        <span class="cons">− Хрупко, дорого, тяжело</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Крафт-пакет</h3>
+                    <p style="font-size: 0.9rem;">Эко-стиль и минимализм.</p>
+                    <div class="pros-cons">
+                        <span class="pros">+ Экологично, атмосферно, дешево</span>
+                        <span class="cons">− Мало места для графики, простой вид</span>
+                    </div>
+                </div>
+            </div>
+            <p style="margin-top: 30px; text-align: center; font-style: italic;">«Парадокс: самая обычная упаковка несёт самый странный визуал».</p>
+        </div>
+    </section>
+
+    <!-- 4. ГИПОТЕЗЫ -->
+    <section>
+        <div class="container">
+            <h2>03. Гипотезы проекта</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Гипотеза 1: Что передаём?</h3>
+                    <p>Ощущение <span class="highlight">«знакомое, но сдвинутое»</span>. Мы не пугаем — мы интригуем. Целевая аудитория: креативные люди 18–35 лет, уставшие от одинаковых полок в супермаркетах.</p>
+                </div>
+                <div class="card">
+                    <h3>Гипотеза 2: Как выглядит?</h3>
+                    <p>Картонная коробка с оптической иллюзией. Чашка, которая одновременно является порталом в другую реальность. Текстура стекающей жидкости, кислотные акценты и глитч-типографика.</p>
+                </div>
+            </div>
+            
+            <!-- Место под картинку от нейросети -->
+            <img src="главный вид.webp" alt="Упаковка Парадокс" class="image-placeholder" style="max-width: 600px; display: block; margin: 40px auto;">
+            <p style="text-align: center; font-size: 0.9rem; color: #888;">Концепт-мокап: чашка-портал с эффектом плавления реальности.</p>
+        </div>
+    </section>
+
+    <!-- 5. МУДБОРТ И ПАЛИТРА -->
+    <section>
+        <div class="container">
+            <h2>04. Мудборт и визуальный стиль</h2>
+            <p>Сюрреализм / Оптические иллюзии / Психоделика 70-х в современной обработке.</p>
+            
+            <!-- ВСТАВЬ СЮДА 6 КАРТИНОК ИЗ PINTEREST -->
+            <div class="moodboard-grid">
+                <img src="девка.wepb" alt="Mood 1">
+                <img src="assets/mood2.jpg" alt="Mood 2">
+                <img src="assets/mood3.jpg" alt="Mood 3">
+                <img src="assets/mood4.jpg" alt="Mood 4">
+                <img src="assets/mood5.jpg" alt="Mood 5">
+                <img src="assets/mood6.jpg" alt="Mood 6">
+            </div>
+
+            <h3 style="margin-top: 40px; margin-bottom: 20px;">Цветовая палитра</h3>
+            <div class="palette">
+                <div style="text-align: center;">
+                    <div class="color-circle" style="background: #0f0a1a;"></div>
+                    <span style="font-size: 0.8rem;">Глубокий космос</span>
+                </div>
+                <div style="text-align: center;">
+                    <div class="color-circle" style="background: #8a2be2;"></div>
+                    <span style="font-size: 0.8rem;">Электрик</span>
+                </div>
+                <div style="text-align: center;">
+                    <div class="color-circle" style="background: #ff00ff;"></div>
+                    <span style="font-size: 0.8rem;">Фуксия</span>
+                </div>
+                <div style="text-align: center;">
+                    <div class="color-circle" style="background: #ccff00;"></div>
+                    <span style="font-size: 0.8rem;">Кислотный лайм</span>
+                </div>
+                <div style="text-align: center;">
+                    <div class="color-circle" style="background: #f5f5dc;"></div>
+                    <span style="font-size: 0.8rem;">Крем (фон)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. ФИНАЛ -->
+    <section style="border-bottom: none; text-align: center; background: linear-gradient(135deg, #0f0a1a 0%, #2a1040 100%);">
+        <div class="container">
+            <h2 style="border-left: none; text-align: center;">05. Парадокс</h2>
+            <p style="font-size: 1.5rem; color: #fff; margin-bottom: 40px;">
+                Самый скучный напиток на полке.<br>
+                Самый странный — в твоей чашке.
+            </p>
+            <p style="font-family: 'Space Mono', monospace; color: var(--accent-lime);">
+                «Заваривать 3 минуты. <br>Не гарантируем, что реальность останется прежней.»
+            </p>
+        </div>
+    </section>
+
+    <script>
+        // Скрипт для кнопки "Наверх"
+        const scrollBtn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollBtn.classList.add('active');
+            } else {
+                scrollBtn.classList.remove('active');
+            }
+        });
+
+        // Плавный скролл для якорных ссылок
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
